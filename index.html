@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNESCO Club Membership Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: auto;
+        }
+
+        .form-info {
+            text-align: right;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>UNESCO CLUB OF UNIVERSITY OF ABUJA</h2>
+        <h3>FEDERAL UNIVERSITY, ABUJA</h3>
+        <div class="form-header">
+            <input type="file" id="profile-pic-input" accept="image/*" onchange="loadProfilePic(event)">
+            <div class="form-info">
+                <p><strong>Membership Form</strong></p>
+                <p>Serial Number: <strong id="serial-number"></strong></p>
+            </div>
+        </div>
+        <form id="membershipForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="nationality">Nationality:</label>
+                <input type="text" id="nationality" name="nationality" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <input type="text" id="gender" name="gender" required>
+            </div>
+            <div class="form-group">
+                <label for="marital-status">Marital Status:</label>
+                <input type="text" id="marital-status" name="marital-status" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile:</label>
+                <input type="text" id="mobile" name="mobile" required>
+            </div>
+            <div class="form-group">
+                <label for="faculty">Faculty:</label>
+                <input type="text" id="faculty" name="faculty" required>
+            </div>
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" required>
+            </div>
+            <div class="form-group">
+                <label for="level">Level:</label>
+                <input type="text" id="level" name="level" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="undertaking">Undertaking:</label>
+                <textarea id="undertaking" name="undertaking" rows="4" required>I hereby submit legitimately my consent to the declared purpose of this Organization. I solely agree to the set down rules and policies of this network...</textarea>
+            </div>
+            <div class="form-group">
+                <label for="signature">Signature:</label>
+                <input type="file" id="signature" name="signature" accept="image/*" required>
+            </div>
+            <button type="button" onclick="sendEmail()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to load profile picture preview
+        function loadProfilePic(event) {
+            const image = document.getElementById('profile-pic');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.onload = () => {
+                URL.revokeObjectURL(image.src);
+            }
+        }
+
+        // Function to generate and display the serial number
+        function generateSerialNumber() {
+            const serialNumber = 'SN' + new Date().getTime();
+            document.getElementById('serial-number').textContent = serialNumber;
+        }
+
+        // Call the function to generate the serial number when the page loads
+        window.onload = generateSerialNumber;
+
+        // Function to send form data via email
+        function sendEmail() {
+            const form = document.getElementById('membershipForm');
+            const formData = new FormData(form);
+
+            const mailtoLink = `mailto:mondaykingsley80@gmail.com?subject=Membership%20Form%20Submission&body=${encodeURIComponent(
+                `Name: ${formData.get('name')}\n` +
+                `Nationality: ${formData.get('nationality')}\n` +
+                `Gender: ${formData.get('gender')}\n` +
+                `Marital Status: ${formData.get('marital-status')}\n` +
+                `Email: ${formData.get('email')}\n` +
+                `Mobile: ${formData.get('mobile')}\n` +
+                `Faculty: ${formData.get('faculty')}\n` +
+                `Department: ${formData.get('department')}\n` +
+                `Level: ${formData.get('level')}\n` +
+                `Date: ${formData.get('date')}\n` +
+                `Undertaking: ${formData.get('undertaking')}\n`
+            )}`;
+
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
